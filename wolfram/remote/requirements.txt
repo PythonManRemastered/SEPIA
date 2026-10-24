@@ -1,0 +1,7 @@
+swat==1.18.1
+certifi
+pandas
+numpy
+wolframclient
+pyzmq
+pyarrow
