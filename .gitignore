@@ -1,21 +1,43 @@
-# OS / editor noise
 .DS_Store
 
-# Wolfram Language / Mathematica backup and temporary files
 *.nb~
 *.wl~
 *.m~
 *.bak
 *.tmp
 
-# Local environment / secrets
 .env
 .env.*
 !.env.example
 
-# Local or restricted datasets
 /data/
 /datasets/
 /pds/
 /pds_data/
 /private_data/
+
+.venv/
+venv/
+sepia-python/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+.authinfo
+.netrc
+credentials.json
+
+AllProvidedFiles_*/
+*.sas7bdat
+*.sashdat
+*.xpt
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.pdf
+*.docx
+*.zip
+*.nb
+*.wxf
+*.mx
