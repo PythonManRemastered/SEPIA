@@ -1,0 +1,1562 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     72396,       1554]
+NotebookOptionsPosition[     65561,       1426]
+NotebookOutlinePosition[     65953,       1442]
+CellTagsIndexPosition[     65910,       1439]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Importing Data from SEPIA", "Subsection",
+ CellChangeTimes->{{4.0035947616235847`*^9, 
+  4.003594767303417*^9}},ExpressionUUID->"938d14a3-f614-4e7a-a9c5-\
+afcccfc885d9"],
+
+Cell["\<\
+Start SEPIA and its associated model, and connect the primary dataset (PDS). \
+\
+\>", "CodeText",
+ CellChangeTimes->{{4.003594778806728*^9, 
+  4.0035948190726624`*^9}},ExpressionUUID->"44492738-41dd-416f-98f3-\
+914d68c21d01"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Get", 
+  "[", "\"\</Users/aadic/sepia-testing/SEPIA/wolfram/remote/SEPIARemote.wl\>\"\
+", "]"}], "\n", 
+ RowBox[{"Get", "[", "\"\</Users/aadic/SEPIA_Model_Training/SEPIAModel.wl\>\"",
+   "]"}], "\n", 
+ RowBox[{"PDSConnect", 
+  "[", "\"\</Users/aadic/sepia-testing/venv/bin/python\>\"", "]"}]}], "Input",\
+
+ CellChangeTimes->{{4.0035930572987423`*^9, 4.003593057298842*^9}, {
+  4.003593129826795*^9, 4.003593130673004*^9}, {4.003593185798191*^9, 
+  4.0035931896511383`*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"7ba4948c-4a06-4767-9707-c3850541318d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Starting SEPIA Python...\"\>"], "Print",
+ CellChangeTimes->{4.003593430810245*^9},
+ CellLabel->
+  "During evaluation of \
+In[17]:=",ExpressionUUID->"9c28b219-8e55-4534-a54f-e6a40f80ea96"],
+
+Cell[BoxData["\<\"Connecting to SAS; waiting for server response...\"\>"], \
+"Print",
+ CellChangeTimes->{4.003593430998589*^9},
+ CellLabel->
+  "During evaluation of \
+In[17]:=",ExpressionUUID->"985c3b27-2bac-4c0f-9e53-0a35f1b82452"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Status\"\>", "\[Rule]", "\<\"Connected\"\>"}], ",", 
+   RowBox[{"\<\"Endpoint\"\>", 
+    "\[Rule]", \
+"\<\"https://mpmprodvdmml.ondemand.sas.com/cas-shared-default-http/\"\>"}], ",", 
+   RowBox[{"\<\"SWATVersion\"\>", "\[Rule]", "\<\"1.18.1\"\>"}], ",", 
+   RowBox[{"\<\"ConnectorVersion\"\>", "\[Rule]", "\<\"0.3.3\"\>"}], ",", 
+   RowBox[{"\<\"ElapsedSeconds\"\>", "\[Rule]", "15.494`"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{{4.003593296670443*^9, 4.003593296800913*^9}, 
+   4.003593446580695*^9},
+ CellLabel->"Out[19]=",ExpressionUUID->"373347aa-13b0-438c-b912-5bdde60372ad"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Testing Code (checking columns, rows, import details, etc.)", \
+"Subsection",
+ CellChangeTimes->{{4.003594836253686*^9, 
+  4.003594849185893*^9}},ExpressionUUID->"f35a4ff4-2443-4474-af36-\
+05a519d595db"],
+
+Cell[CellGroupData[{
+
+Cell["Testing the general patient data (non-adverse cases)", "Subsubsection",
+ CellChangeTimes->{{4.0035948983963337`*^9, 
+  4.0035949083761253`*^9}},ExpressionUUID->"e30912f2-823e-481a-afcd-\
+2e220b51a9e6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"imp", "=", 
+  RowBox[{"PDSImportedData", "[", "]"}]}]], "Input",
+ CellChangeTimes->{{4.003594000041194*^9, 4.003594000041294*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"ab16c3b0-fd39-4c78-9a16-3198814ac54b"],
+
+Cell[BoxData[
+ TemplateBox[<|"shortenedBoxes" -> TagBox[
+     RowBox[{"\[LeftAssociation]", 
+       RowBox[{
+         RowBox[{"\"ColumnNames\"", "\[Rule]", 
+           RowBox[{"{", 
+             
+             RowBox[{"\"STUDYID\"", ",", "\"USUBJID\"", ",", "\"SUBJID\"", 
+               ",", "\"SITEID\"", ",", "\"INVID\"", ",", "\"COUNTRY\"", ",", 
+               "\"RACE\"", ",", "\"RACESP\"", ",", "\"RACECD\"", ",", 
+               "\"RACEN\"", ",", "\"RACEGR1\"", ",", "\"RACEGR1N\"", ",", 
+               "\"ETHNIC\"", ",", "\"ETHNICN\"", ",", "\"SEX\"", ",", 
+               "\"SEXN\"", ",", "\"BRTHDTC\"", ",", "\"AGEIC\"", ",", 
+               "\"AGEU\"", ",", "\"AGEGR1\"", ",", "\"AGEGR1N\"", ",", 
+               "\"AGEGR2\"", ",", "\"AGEGR2N\"", ",", "\"PTAX\"", ",", 
+               "\"PTAXN\"", ",", "\"VMETA\"", ",", "\"VMETAN\"", ",", 
+               "\"HR\"", ",", "\"HRN\"", ",", "\"GEOREG\"", ",", 
+               "\"GEOREGN\"", ",", "\"ACTDT\"", ",", "\"ACTFL\"", ",", 
+               "\"ICDTC\"", ",", "\"ICDT\"", ",", "\"SCRFL\"", ",", 
+               "\"RANDDTC\"", ",", "\"RANDDT\"", ",", "\"RANDFL\"", ",", 
+               "\"ITTFL\"", ",", "\"PROTVLFL\"", ",", "\"PPROTFL\"", ",", 
+               "\"ARMCD\"", ",", "\"ARM\"", ",", "\"TRTSDTM\"", ",", 
+               "\"TRTSDT\"", ",", "\"TRTEDTM\"", ",", "\"TRTEDT\"", ",", 
+               "\"SAFFL\"", ",", "\"TRT01P\"", ",", "\"TRT01PN\"", ",", 
+               "\"TRT01A\"", ",", "\"TRT01AN\"", ",", "\"EXCLREAS\"", ",", 
+               "\"EXCLREAN\"", ",", "\"DSTRDTC\"", ",", "\"DSTRDT\"", ",", 
+               "\"DSTRFL\"", ",", "\"DSTRTERM\"", ",", "\"DSTRGR1\"", ",", 
+               "\"DSTRGR1N\"", ",", "\"DSTRREAS\"", ",", "\"DSSDDT\"", ",", 
+               "\"DSSDFL\"", ",", "\"DSSDTERM\"", ",", "\"DSSDREAS\"", ",", 
+               "\"DSSDREAN\"", ",", "\"DEATHDT\"", ",", "\"DEATHFL\"", ",", 
+               "\"DTH30FL\"", ",", "\"DTHCAUS\"", ",", "\"DTHCGR1\"", ",", 
+               "\"ATPSYFL\"", ",", "\"HGTBLR\"", ",", "\"WGTBLR\"", ",", 
+               "\"BSABLR\"", ",", "\"ECOGBLR\"", ",", "\"ECOGGR1\"", ",", 
+               "\"ECOGGR1N\"", ",", "\"LVEFBLR\"", ",", "\"EKGBLR\"", ",", 
+               "\"MENOST\"", ",", "\"CONMTH\"", ",", "\"REGST\"", ",", 
+               "\"REGSTN\"", ",", "\"NBST\"", ",", "\"NBSTGR1\"", ",", 
+               "\"NBSTGR1N\"", ",", "\"LESTYP\"", ",", "\"LESTYPN\"", ",", 
+               "\"DFI\"", ",", "\"DFIU\"", ",", "\"DFIGR1\"", ",", 
+               "\"DFIGR1N\"", ",", "\"ERST\"", ",", "\"ERSTGR1\"", ",", 
+               "\"ERSTGR1N\"", ",", "\"PRST\"", ",", "\"PRSTGR1\"", ",", 
+               "\"PRSTGR1N\"", ",", "\"HERST\"", ",", "\"TRPNEGFL\"", ",", 
+               "\"PHTXFL\"", ",", "\"PCTXFL\"", ",", "\"PACTFL\"", ",", 
+               "\"PAFL\"", ",", "\"CUTDT\"", ",", "\"PROTVER\"", ",", 
+               "\"DEATHDTC\"", ",", "\"DSSDDTC\""}], "}"}]}], ",", 
+         TemplateBox[{"6"}, "OutputSizeLimit`Skeleton"], ",", 
+         RowBox[{"\"ElapsedSeconds\"", "\[Rule]", "11.48`"}]}], 
+       "\[RightAssociation]"}], Short[#, 16]& ], "line" -> 20, "sessionID" -> 
+   19698762443031913423, "byteCount" -> 3529144, "size" -> 16, "stored" -> 
+   False, "expr" -> Missing["NotStored"], "wrap" -> OutputSizeLimit`Defer, 
+   "version" -> 1|>,
+  "OutputSizeLimitTemplate"]], "Output",
+ CellChangeTimes->{4.003594015642705*^9},
+ CellLabel->"Out[20]=",ExpressionUUID->"13e6fc2e-bde8-4151-a8df-af2744b6df55"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"imp", "[", "\"\<Dimensions\>\"", "]"}], ",", 
+   RowBox[{"imp", "[", "\"\<ColumnNames\>\"", "]"}]}], "}"}]], "Input",
+ CellChangeTimes->{{4.003594004671775*^9, 4.0035940046718063`*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"71b5330a-b4ab-492d-b6d1-67bb909aef8b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"385", ",", "110"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"STUDYID\"\>", ",", "\<\"USUBJID\"\>", ",", "\<\"SUBJID\"\>", 
+     ",", "\<\"SITEID\"\>", ",", "\<\"INVID\"\>", ",", "\<\"COUNTRY\"\>", 
+     ",", "\<\"RACE\"\>", ",", "\<\"RACESP\"\>", ",", "\<\"RACECD\"\>", 
+     ",", "\<\"RACEN\"\>", ",", "\<\"RACEGR1\"\>", ",", "\<\"RACEGR1N\"\>", 
+     ",", "\<\"ETHNIC\"\>", ",", "\<\"ETHNICN\"\>", ",", "\<\"SEX\"\>", 
+     ",", "\<\"SEXN\"\>", ",", "\<\"BRTHDTC\"\>", ",", "\<\"AGEIC\"\>", 
+     ",", "\<\"AGEU\"\>", ",", "\<\"AGEGR1\"\>", ",", "\<\"AGEGR1N\"\>", 
+     ",", "\<\"AGEGR2\"\>", ",", "\<\"AGEGR2N\"\>", ",", "\<\"PTAX\"\>", 
+     ",", "\<\"PTAXN\"\>", ",", "\<\"VMETA\"\>", ",", "\<\"VMETAN\"\>", 
+     ",", "\<\"HR\"\>", ",", "\<\"HRN\"\>", ",", "\<\"GEOREG\"\>", 
+     ",", "\<\"GEOREGN\"\>", ",", "\<\"ACTDT\"\>", ",", "\<\"ACTFL\"\>", 
+     ",", "\<\"ICDTC\"\>", ",", "\<\"ICDT\"\>", ",", "\<\"SCRFL\"\>", 
+     ",", "\<\"RANDDTC\"\>", ",", "\<\"RANDDT\"\>", ",", "\<\"RANDFL\"\>", 
+     ",", "\<\"ITTFL\"\>", ",", "\<\"PROTVLFL\"\>", ",", "\<\"PPROTFL\"\>", 
+     ",", "\<\"ARMCD\"\>", ",", "\<\"ARM\"\>", ",", "\<\"TRTSDTM\"\>", 
+     ",", "\<\"TRTSDT\"\>", ",", "\<\"TRTEDTM\"\>", ",", "\<\"TRTEDT\"\>", 
+     ",", "\<\"SAFFL\"\>", ",", "\<\"TRT01P\"\>", ",", "\<\"TRT01PN\"\>", 
+     ",", "\<\"TRT01A\"\>", ",", "\<\"TRT01AN\"\>", ",", "\<\"EXCLREAS\"\>", 
+     ",", "\<\"EXCLREAN\"\>", ",", "\<\"DSTRDTC\"\>", ",", "\<\"DSTRDT\"\>", 
+     ",", "\<\"DSTRFL\"\>", ",", "\<\"DSTRTERM\"\>", ",", "\<\"DSTRGR1\"\>", 
+     ",", "\<\"DSTRGR1N\"\>", ",", "\<\"DSTRREAS\"\>", ",", "\<\"DSSDDT\"\>", 
+     ",", "\<\"DSSDFL\"\>", ",", "\<\"DSSDTERM\"\>", ",", "\<\"DSSDREAS\"\>", 
+     ",", "\<\"DSSDREAN\"\>", ",", "\<\"DEATHDT\"\>", ",", "\<\"DEATHFL\"\>", 
+     ",", "\<\"DTH30FL\"\>", ",", "\<\"DTHCAUS\"\>", ",", "\<\"DTHCGR1\"\>", 
+     ",", "\<\"ATPSYFL\"\>", ",", "\<\"HGTBLR\"\>", ",", "\<\"WGTBLR\"\>", 
+     ",", "\<\"BSABLR\"\>", ",", "\<\"ECOGBLR\"\>", ",", "\<\"ECOGGR1\"\>", 
+     ",", "\<\"ECOGGR1N\"\>", ",", "\<\"LVEFBLR\"\>", ",", "\<\"EKGBLR\"\>", 
+     ",", "\<\"MENOST\"\>", ",", "\<\"CONMTH\"\>", ",", "\<\"REGST\"\>", 
+     ",", "\<\"REGSTN\"\>", ",", "\<\"NBST\"\>", ",", "\<\"NBSTGR1\"\>", 
+     ",", "\<\"NBSTGR1N\"\>", ",", "\<\"LESTYP\"\>", ",", "\<\"LESTYPN\"\>", 
+     ",", "\<\"DFI\"\>", ",", "\<\"DFIU\"\>", ",", "\<\"DFIGR1\"\>", 
+     ",", "\<\"DFIGR1N\"\>", ",", "\<\"ERST\"\>", ",", "\<\"ERSTGR1\"\>", 
+     ",", "\<\"ERSTGR1N\"\>", ",", "\<\"PRST\"\>", ",", "\<\"PRSTGR1\"\>", 
+     ",", "\<\"PRSTGR1N\"\>", ",", "\<\"HERST\"\>", ",", "\<\"TRPNEGFL\"\>", 
+     ",", "\<\"PHTXFL\"\>", ",", "\<\"PCTXFL\"\>", ",", "\<\"PACTFL\"\>", 
+     ",", "\<\"PAFL\"\>", ",", "\<\"CUTDT\"\>", ",", "\<\"PROTVER\"\>", 
+     ",", "\<\"DEATHDTC\"\>", ",", "\<\"DSSDDTC\"\>"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{4.003594020896538*^9},
+ CellLabel->"Out[21]=",ExpressionUUID->"36043853-87de-4911-872e-1e699ca31ec0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"subjects", "=", 
+  RowBox[{"SEPIAFromImported", "[", "imp", "]"}]}]], "Input",
+ CellChangeTimes->{{4.0035940097914553`*^9, 4.003594009791547*^9}},
+ CellLabel->"In[22]:=",ExpressionUUID->"454c1b3b-f02c-4ee3-9ce7-582b2174d5f5"],
+
+Cell[BoxData[
+ TemplateBox[<|"shortenedBoxes" -> TagBox[
+     RowBox[{"{", 
+       RowBox[{
+         RowBox[{"\[LeftAssociation]", 
+           RowBox[{
+             RowBox[{"\"STUDYID\"", "\[Rule]", "\"CP12-0606\""}], ",", 
+             RowBox[{"\"USUBJID\"", "\[Rule]", "\"CP12-0606/1192-1227\""}], 
+             ",", 
+             RowBox[{"\"SUBJID\"", "\[Rule]", "\"1192-1227\""}], ",", 
+             RowBox[{"\"SITEID\"", "\[Rule]", "\"1192\""}], ",", 
+             RowBox[{"\"INVID\"", "\[Rule]", "\"INQ6663\""}], ",", 
+             RowBox[{"\"COUNTRY\"", "\[Rule]", "\"IRL\""}], ",", 
+             RowBox[{"\"RACE\"", "\[Rule]", "\"WHITE\""}], ",", 
+             RowBox[{"\"RACESP\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"RACECD\"", "\[Rule]", "\"WHITE\""}], ",", 
+             RowBox[{"\"RACEN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"RACEGR1\"", "\[Rule]", "\"WHITE\""}], ",", 
+             RowBox[{"\"RACEGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"ETHNIC\"", "\[Rule]", "\"NOT HISPANIC OR LATINO\""}], 
+             ",", 
+             RowBox[{"\"ETHNICN\"", "\[Rule]", "2.`"}], ",", 
+             RowBox[{"\"SEX\"", "\[Rule]", "\"F\""}], ",", 
+             RowBox[{"\"SEXN\"", "\[Rule]", "2.`"}], ",", 
+             RowBox[{"\"BRTHDTC\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AGEIC\"", "\[Rule]", "54.`"}], ",", 
+             RowBox[{"\"AGEU\"", "\[Rule]", "\"YEARS\""}], ",", 
+             RowBox[{"\"AGEGR1\"", "\[Rule]", "\"< 65\""}], ",", 
+             RowBox[{"\"AGEGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AGEGR2\"", "\[Rule]", "\"< 75\""}], ",", 
+             RowBox[{"\"AGEGR2N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"PTAX\"", "\[Rule]", "\"Yes\""}], ",", 
+             RowBox[{"\"PTAXN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"VMETA\"", "\[Rule]", "\"Yes\""}], ",", 
+             RowBox[{"\"VMETAN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"HR\"", "\[Rule]", "\"Positive\""}], ",", 
+             RowBox[{"\"HRN\"", "\[Rule]", "1.`"}], ",", 
+             TemplateBox[{"53"}, "OutputSizeLimit`Skeleton"], ",", 
+             RowBox[{"\"CONMTH\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"REGST\"", "\[Rule]", "\"METASTATIC BREAST CANCER\""}],
+              ",", 
+             RowBox[{"\"REGSTN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"NBST\"", "\[Rule]", "2.`"}], ",", 
+             RowBox[{"\"NBSTGR1\"", "\[Rule]", "\"< 3\""}], ",", 
+             RowBox[{"\"NBSTGR1N\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"LESTYP\"", "\[Rule]", "\"NON-MEASURABLE\""}], ",", 
+             RowBox[{"\"LESTYPN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"DFI\"", "\[Rule]", "16.9856262833675`"}], ",", 
+             RowBox[{"\"DFIU\"", "\[Rule]", "\"MONTHS\""}], ",", 
+             RowBox[{"\"DFIGR1\"", "\[Rule]", "\"< 24\""}], ",", 
+             RowBox[{"\"DFIGR1N\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"ERST\"", "\[Rule]", "\"POSITIVE\""}], ",", 
+             RowBox[{"\"ERSTGR1\"", "\[Rule]", "\"POSITIVE\""}], ",", 
+             RowBox[{"\"ERSTGR1N\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"PRST\"", "\[Rule]", "\"NEGATIVE\""}], ",", 
+             RowBox[{"\"PRSTGR1\"", "\[Rule]", "\"NEGATIVE/UNKNOWN\""}], ",", 
+             
+             RowBox[{"\"PRSTGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"HERST\"", "\[Rule]", "\"NOT AMPLIFIED OR 0, 1+\""}], 
+             ",", 
+             RowBox[{"\"TRPNEGFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"PHTXFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"PCTXFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"PACTFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"PAFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"CUTDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2216-03-13\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"PROTVER\"", "\[Rule]", "\"Version 7.0\""}], ",", 
+             RowBox[{"\"DEATHDTC\"", "\[Rule]", "\"2213-12-14\""}], ",", 
+             RowBox[{"\"DSSDDTC\"", "\[Rule]", "\"2213-12-14\""}]}], 
+           "\[RightAssociation]"}], ",", 
+         TemplateBox[{"383"}, "OutputSizeLimit`Skeleton"], ",", 
+         RowBox[{"\[LeftAssociation]", 
+           TemplateBox[{"1"}, "OutputSizeLimit`Skeleton"], 
+           "\[RightAssociation]"}]}], "}"}], Short[#, 16]& ], "line" -> 22, 
+   "sessionID" -> 19698762443031913423, "byteCount" -> 8615440, "size" -> 16, 
+   "stored" -> False, "expr" -> Missing["NotStored"], "wrap" -> 
+   OutputSizeLimit`Defer, "version" -> 1|>,
+  "OutputSizeLimitTemplate"]], "Output",
+ CellChangeTimes->{4.003594039635564*^9},
+ CellLabel->"Out[22]=",ExpressionUUID->"9fb14e1a-9642-40f7-a0cc-4df67eabe644"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Testing the adverse cases of patient data (not 100% sure about accuracy here)\
+\
+\>", "Subsubsection",
+ CellChangeTimes->{{4.003594922456189*^9, 
+  4.0035949597004747`*^9}},ExpressionUUID->"7e43fa24-c5af-4c49-a8e8-\
+a817ed2178bc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"adverse", "=", 
+  RowBox[{"SEPIAFromImported", "[", 
+   RowBox[{"PDSImportedData", "[", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{4.0035942195076303`*^9, 4.003594219507696*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"3ac9e0af-35cc-4d36-b409-04b2d6f5dd5a"],
+
+Cell[BoxData[
+ TemplateBox[<|"shortenedBoxes" -> TagBox[
+     RowBox[{"{", 
+       RowBox[{
+         RowBox[{"\[LeftAssociation]", 
+           RowBox[{
+             RowBox[{"\"STUDYID\"", "\[Rule]", "\"CP12-0606\""}], ",", 
+             RowBox[{"\"USUBJID\"", "\[Rule]", "\"CP12-0606/1192-1227\""}], 
+             ",", 
+             RowBox[{"\"SUBJID\"", "\[Rule]", "\"1192-1227\""}], ",", 
+             RowBox[{"\"INVID\"", "\[Rule]", "\"INQ6663\""}], ",", 
+             RowBox[{"\"TRTP\"", "\[Rule]", "\"Placebo + Docetaxel\""}], ",", 
+             
+             RowBox[{"\"TRTPN\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"TRTA\"", "\[Rule]", "\"Placebo + Docetaxel\""}], ",", 
+             
+             RowBox[{"\"TRTAN\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"SAFFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"ICDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-08-19\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"TRTSDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-09-12\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"TRTEDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-12-05\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"DSTRDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-12-15\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"DEATHDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2213-12-14\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"COUNTRY\"", "\[Rule]", "\"IRL\""}], ",", 
+             RowBox[{"\"RACEGR1\"", "\[Rule]", "\"WHITE\""}], ",", 
+             RowBox[{"\"RACEGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AGEGR1\"", "\[Rule]", "\"< 65\""}], ",", 
+             RowBox[{"\"AGEGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AENUM\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"AESEQ\"", "\[Rule]", "4.`"}], ",", 
+             RowBox[{"\"AETERM\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AELLT\"", "\[Rule]", "\"SINUS BRADYCARDIA\""}], ",", 
+             RowBox[{"\"AEDECOD\"", "\[Rule]", "\"SINUS BRADYCARDIA\""}], ",", 
+             
+             RowBox[{"\"AEHLT\"", "\[Rule]", 
+               "\"SUPRAVENTRICULAR ARRHYTHMIAS\""}], ",", 
+             RowBox[{"\"AEHLGT\"", "\[Rule]", "\"CARDIAC ARRHYTHMIAS\""}], 
+             ",", 
+             RowBox[{"\"AEBODSYS\"", "\[Rule]", "\"CARDIAC DISORDERS\""}], 
+             ",", 
+             RowBox[{"\"ATOXGR\"", "\[Rule]", "\"1\""}], ",", 
+             RowBox[{"\"ATOXGRN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"AESER\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AESERL\"", "\[Rule]", "\"NO\""}], ",", 
+             RowBox[{"\"AESHOSP\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEOUT\"", "\[Rule]", "\"UNKNOWN\""}], ",", 
+             RowBox[{"\"AEOUTL\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESDTH\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESLIFE\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESMIE\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AECONTRT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-08-19\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"AESDTF\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESDY\"", "\[Rule]", 
+               RowBox[{"-", "24.`"}]}], ",", 
+             RowBox[{"\"AESTRTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESTTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEEDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-08-19\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"AEEDTF\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEEDY\"", "\[Rule]", 
+               RowBox[{"-", "24.`"}]}], ",", 
+             RowBox[{"\"AEENRTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEENTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"ADURN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"ADURU\"", "\[Rule]", "\"Days\""}], ",", 
+             RowBox[{"\"AEREL1\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEREL1N\"", "\[Rule]", 
+               RowBox[{"Missing", "[", "\"CASMissing\"", "]"}]}], ",", 
+             RowBox[{"\"AEREL2\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEREL2N\"", "\[Rule]", 
+               RowBox[{"Missing", "[", "\"CASMissing\"", "]"}]}], ",", 
+             RowBox[{"\"AEACN1\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEACN1N\"", "\[Rule]", 
+               RowBox[{"Missing", "[", "\"CASMissing\"", "]"}]}], ",", 
+             RowBox[{"\"AEACN2\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEACN2N\"", "\[Rule]", 
+               RowBox[{"Missing", "[", "\"CASMissing\"", "]"}]}], ",", 
+             RowBox[{"\"AEACNO\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEACNON\"", "\[Rule]", 
+               RowBox[{"Missing", "[", "\"CASMissing\"", "]"}]}], ",", 
+             RowBox[{"\"AEIMDCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDODCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEIMMDFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDOMDFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEMDFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEIMRLFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDORLFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AERELFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"TRTEMFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL01FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL02FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL03FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL04FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL05FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL06FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL07FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL08FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL09FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL10FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL11FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL12FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL13FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL14FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL15FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL16FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL17FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL18FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL19FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL20FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL21FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL22FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL23FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL24FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL25FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL26FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL27FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL28FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL29FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL30FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL31FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL32FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL33FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL34FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL35FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL36FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL37FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL38FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"DRERRFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LILFCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LILFNCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LBTERMFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LIINFFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AESTDTC\"", "\[Rule]", "\"2212-08-19\""}], ",", 
+             RowBox[{"\"AEENDTC\"", "\[Rule]", "\"2212-08-19\""}]}], 
+           "\[RightAssociation]"}], ",", 
+         TemplateBox[{"7353"}, "OutputSizeLimit`Skeleton"], ",", 
+         RowBox[{"\[LeftAssociation]", 
+           RowBox[{
+             RowBox[{"\"STUDYID\"", "\[Rule]", "\"CP12-0606\""}], ",", 
+             RowBox[{"\"USUBJID\"", "\[Rule]", "\"CP12-0606/9995-5991\""}], 
+             ",", 
+             RowBox[{"\"SUBJID\"", "\[Rule]", "\"9995-5991\""}], ",", 
+             RowBox[{"\"INVID\"", "\[Rule]", "\"ILX6692\""}], ",", 
+             RowBox[{"\"TRTP\"", "\[Rule]", "\"Placebo + Docetaxel\""}], ",", 
+             
+             RowBox[{"\"TRTPN\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"TRTA\"", "\[Rule]", "\"Placebo + Docetaxel\""}], ",", 
+             
+             RowBox[{"\"TRTAN\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"SAFFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"ICDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2209-07-09\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"TRTSDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2209-07-19\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"TRTEDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-01-07\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"DSTRDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-02-12\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"DEATHDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-04-17\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"COUNTRY\"", "\[Rule]", "\"CAN\""}], ",", 
+             RowBox[{"\"RACEGR1\"", "\[Rule]", "\"WHITE\""}], ",", 
+             RowBox[{"\"RACEGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AGEGR1\"", "\[Rule]", "\"< 65\""}], ",", 
+             RowBox[{"\"AGEGR1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AENUM\"", "\[Rule]", "21.`"}], ",", 
+             RowBox[{"\"AESEQ\"", "\[Rule]", "241.`"}], ",", 
+             RowBox[{"\"AETERM\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AELLT\"", "\[Rule]", "\"WEIGHT INCREASE\""}], ",", 
+             RowBox[{"\"AEDECOD\"", "\[Rule]", "\"WEIGHT INCREASED\""}], ",", 
+             
+             
+             RowBox[{"\"AEHLT\"", "\[Rule]", 
+               "\"PHYSICAL EXAMINATION PROCEDURES AND ORGAN SYSTEM \
+STATUS\""}], ",", 
+             
+             RowBox[{"\"AEHLGT\"", "\[Rule]", 
+               "\"PHYSICAL EXAMINATION AND ORGAN SYSTEM STATUS TOPICS\""}], 
+             ",", 
+             RowBox[{"\"AEBODSYS\"", "\[Rule]", "\"INVESTIGATIONS\""}], ",", 
+             RowBox[{"\"ATOXGR\"", "\[Rule]", "\"1\""}], ",", 
+             RowBox[{"\"ATOXGRN\"", "\[Rule]", "1.`"}], ",", 
+             RowBox[{"\"AESER\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AESERL\"", "\[Rule]", "\"NO\""}], ",", 
+             RowBox[{"\"AESHOSP\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEOUT\"", "\[Rule]", "\"UNKNOWN\""}], ",", 
+             RowBox[{"\"AEOUTL\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESDTH\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESLIFE\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESMIE\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AECONTRT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2211-05-14\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"AESDTF\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESDY\"", "\[Rule]", "665.`"}], ",", 
+             RowBox[{"\"AESTRTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AESTTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEEDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-01-06\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"AEEDTF\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEEDY\"", "\[Rule]", "902.`"}], ",", 
+             RowBox[{"\"AEENRTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"AEENTPT\"", "\[Rule]", "\"\""}], ",", 
+             RowBox[{"\"ADURN\"", "\[Rule]", "238.`"}], ",", 
+             RowBox[{"\"ADURU\"", "\[Rule]", "\"Days\""}], ",", 
+             RowBox[{"\"AEREL1\"", "\[Rule]", "\"UNRELATED\""}], ",", 
+             RowBox[{"\"AEREL1N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AEREL2\"", "\[Rule]", "\"UNRELATED\""}], ",", 
+             RowBox[{"\"AEREL2N\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"AEACN1\"", "\[Rule]", "\"NONE\""}], ",", 
+             RowBox[{"\"AEACN1N\"", "\[Rule]", "0.`"}], ",", 
+             TemplateBox[{"3"}, "OutputSizeLimit`Skeleton"], ",", 
+             RowBox[{"\"AEACNON\"", "\[Rule]", 
+               RowBox[{"Missing", "[", "\"CASMissing\"", "]"}]}], ",", 
+             RowBox[{"\"AEIMDCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDODCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEIMMDFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDOMDFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEMDFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEIMRLFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AEDORLFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AERELFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"TRTEMFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"ANL01FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL02FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL03FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL04FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL05FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL06FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL07FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL08FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL09FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL10FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL11FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL12FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL13FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL14FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL15FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL16FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL17FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL18FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL19FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL20FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL21FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL22FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL23FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL24FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL25FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL26FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL27FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL28FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL29FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL30FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL31FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL32FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL33FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL34FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL35FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL36FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL37FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL38FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"DRERRFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LILFCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LILFNCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LBTERMFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LIINFFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AESTDTC\"", "\[Rule]", "\"2211-05-14\""}], ",", 
+             RowBox[{"\"AEENDTC\"", "\[Rule]", "\"2212-01-06\""}]}], 
+           "\[RightAssociation]"}]}], "}"}], Short[#, 64]& ], "line" -> 23, 
+   "sessionID" -> 19698762443031913423, "byteCount" -> 159343160, "size" -> 
+   64, "stored" -> False, "expr" -> Missing["NotStored"], "wrap" -> 
+   OutputSizeLimit`Defer, "version" -> 1|>,
+  "OutputSizeLimitTemplate"]], "Output",
+ CellChangeTimes->{4.003594223077203*^9},
+ CellLabel->"Out[23]=",ExpressionUUID->"59c5eb3d-79ad-4910-9d84-64fcecbbb91b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"subjects", "=", 
+   RowBox[{"SEPIAFromImported", "[", "imp", "]"}]}], ";"}], "\n", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"Length", "[", "subjects", "]"}], ",", 
+   RowBox[{"Length", "[", 
+    RowBox[{"DeleteDuplicates", "[", 
+     RowBox[{"subjects", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "\"\<USUBJID\>\""}], "]"}], "]"}], "]"}], "]"}]}], 
+  "}"}]}], "Input",
+ CellChangeTimes->{{4.003594541795425*^9, 4.0035945417955236`*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"4949b092-21b1-4d80-981f-7ca2b8c132cd"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"385", ",", "385"}], "}"}]], "Output",
+ CellChangeTimes->{4.003594542228629*^9},
+ CellLabel->"Out[25]=",ExpressionUUID->"9a32e30a-eb86-470d-b317-1629adc6dc84"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Counts", "[", 
+  RowBox[{"subjects", "[", 
+   RowBox[{"[", 
+    RowBox[{"All", ",", "\"\<TRT01A\>\""}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{4.003594562078953*^9, 4.003594562078986*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"f423ebd9-868f-4ac8-b779-ef1f3b85740b"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Placebo + Docetaxel\"\>", "\[Rule]", "382"}], ",", 
+   RowBox[{"\<\"\"\>", "\[Rule]", "2"}], ",", 
+   RowBox[{"\<\"Ramucirumab + Docetaxel\"\>", "\[Rule]", "1"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{4.003594562532834*^9},
+ CellLabel->"Out[26]=",ExpressionUUID->"6abc50ca-e389-44fb-a28f-4a2f507cd3ac"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"c", ",", 
+     RowBox[{"Counts", "[", 
+      RowBox[{"Head", "/@", 
+       RowBox[{"subjects", "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "c"}], "]"}], "]"}]}], "]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"c", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<AGEIC\>\"", ",", "\"\<HGTBLR\>\"", ",", "\"\<WGTBLR\>\"", 
+       ",", "\"\<BSABLR\>\"", ",", "\"\<LVEFBLR\>\"", ",", "\"\<ECOGBLR\>\"", 
+       ",", "\"\<MENOST\>\"", ",", "\"\<TRTSDT\>\"", ",", "\"\<TRTEDT\>\""}], 
+      "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{4.00359457573903*^9, 4.0035945757390537`*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"15ad3930-59ca-43fe-879c-07e2c756bdfb"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\<\"AGEIC\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"Real", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"HGTBLR\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"Real", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"WGTBLR\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"Real", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"BSABLR\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"Real", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"LVEFBLR\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"Real", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"ECOGBLR\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"Real", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"MENOST\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{"String", "\[Rule]", "385"}], "\[RightAssociation]"}]}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"TRTSDT\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{
+       RowBox[{"Association", "\[Rule]", "383"}], ",", 
+       RowBox[{"Missing", "\[Rule]", "2"}]}], "\[RightAssociation]"}]}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"TRTEDT\"\>", ",", 
+     RowBox[{"\[LeftAssociation]", 
+      RowBox[{
+       RowBox[{"Association", "\[Rule]", "383"}], ",", 
+       RowBox[{"Missing", "\[Rule]", "2"}]}], "\[RightAssociation]"}]}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{4.003594576170753*^9},
+ CellLabel->"Out[27]=",ExpressionUUID->"cfc68992-b704-4a14-81b9-275b68804ff7"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"toDateObject", "[", "v_", "]"}], ":=", 
+  RowBox[{"Which", "[", 
+   RowBox[{
+    RowBox[{"DateObjectQ", "[", "v", "]"}], ",", "v", ",", 
+    RowBox[{"StringQ", "[", "v", "]"}], ",", 
+    RowBox[{"Quiet", "[", 
+     RowBox[{"DateObject", "[", "v", "]"}], "]"}], ",", 
+    RowBox[{
+     RowBox[{"AssociationQ", "[", "v", "]"}], "&&", 
+     RowBox[{"KeyExistsQ", "[", 
+      RowBox[{"v", ",", "\"\<ISO8601\>\""}], "]"}]}], ",", 
+    RowBox[{"Quiet", "[", 
+     RowBox[{"DateObject", "[", 
+      RowBox[{"v", "[", "\"\<ISO8601\>\"", "]"}], "]"}], "]"}], ",", "True", ",", 
+    RowBox[{"Missing", "[", "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{4.003594655389159*^9, 4.0035946553893414`*^9}},
+ CellLabel->"In[28]:=",ExpressionUUID->"2f5866f2-7136-400d-b74a-b075be1fcaf9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"durationDays", "[", 
+   RowBox[{"s_", ",", "e_"}], "]"}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"a", "=", 
+       RowBox[{"toDateObject", "[", "s", "]"}]}], ",", 
+      RowBox[{"b", "=", 
+       RowBox[{"toDateObject", "[", "e", "]"}]}]}], "}"}], ",", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"DateObjectQ", "[", "a", "]"}], "&&", 
+       RowBox[{"DateObjectQ", "[", "b", "]"}]}], ",", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "[", 
+        RowBox[{"DateDifference", "[", 
+         RowBox[{"a", ",", "b", ",", "\"\<Day\>\""}], "]"}], "]"}], "+", 
+       "1"}], ",", 
+      RowBox[{"Missing", "[", "]"}]}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{4.003594660969049*^9, 4.0035946609690723`*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"cafa3c17-5773-4f7d-a46a-5b5c977b0c53"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"subjectsWithDuration", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"r", ",", 
+       RowBox[{"Append", "[", 
+        RowBox[{"r", ",", 
+         RowBox[{"\"\<TRTDURD\>\"", "->", 
+          RowBox[{"durationDays", "[", 
+           RowBox[{
+            RowBox[{"r", "[", "\"\<TRTSDT\>\"", "]"}], ",", 
+            RowBox[{"r", "[", "\"\<TRTEDT\>\"", "]"}]}], "]"}]}]}], "]"}]}], 
+      "]"}], ",", "subjects"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{4.003594668645008*^9, 4.003594668645032*^9}},
+ CellLabel->"In[30]:=",ExpressionUUID->"0ae431a6-dfb4-4709-ba80-22574201704b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"d", "=", 
+     RowBox[{"Select", "[", 
+      RowBox[{
+       RowBox[{"subjectsWithDuration", "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "\"\<TRTDURD\>\""}], "]"}], "]"}], ",", 
+       "NumberQ"}], "]"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Length", "[", "d", "]"}], ",", 
+     RowBox[{"Min", "[", "d", "]"}], ",", 
+     RowBox[{"Max", "[", "d", "]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{4.003594675575222*^9, 4.003594675575301*^9}},
+ CellLabel->"In[31]:=",ExpressionUUID->"dc437bb1-1ffc-474e-9da2-f89fe4caadbe"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"383", ",", "1", ",", "1508"}], "}"}]], "Output",
+ CellChangeTimes->{4.003594676026956*^9},
+ CellLabel->"Out[31]=",ExpressionUUID->"e578e79b-1440-4e09-9680-7b96b60565e0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"adverse", "=", 
+  RowBox[{"SEPIAFromImported", "[", 
+   RowBox[{"PDSImportedData", "[", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{4.003594863915853*^9, 4.00359488433068*^9}},
+ CellLabel->"In[36]:=",ExpressionUUID->"9ff9e0a8-456b-4add-8a38-19c74bde8938"],
+
+Cell[BoxData[
+ TemplateBox[<|"shortenedBoxes" -> TagBox[
+     RowBox[{"{", 
+       RowBox[{
+         RowBox[{"\[LeftAssociation]", 
+           RowBox[{
+             RowBox[{"\"STUDYID\"", "\[Rule]", "\"CP12-0606\""}], ",", 
+             RowBox[{"\"USUBJID\"", "\[Rule]", "\"CP12-0606/1192-1227\""}], 
+             ",", 
+             RowBox[{"\"SUBJID\"", "\[Rule]", "\"1192-1227\""}], ",", 
+             RowBox[{"\"INVID\"", "\[Rule]", "\"INQ6663\""}], ",", 
+             RowBox[{"\"TRTP\"", "\[Rule]", "\"Placebo + Docetaxel\""}], ",", 
+             
+             RowBox[{"\"TRTPN\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"TRTA\"", "\[Rule]", "\"Placebo + Docetaxel\""}], ",", 
+             
+             RowBox[{"\"TRTAN\"", "\[Rule]", "0.`"}], ",", 
+             RowBox[{"\"SAFFL\"", "\[Rule]", "\"Y\""}], ",", 
+             RowBox[{"\"ICDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-08-19\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             RowBox[{"\"TRTSDT\"", "\[Rule]", 
+               RowBox[{"\[LeftAssociation]", 
+                 RowBox[{
+                   RowBox[{"\"SEPIAType\"", "\[Rule]", "\"Date\""}], ",", 
+                   RowBox[{"\"ISO8601\"", "\[Rule]", "\"2212-09-12\""}]}], 
+                 "\[RightAssociation]"}]}], ",", 
+             TemplateBox[{"93"}, "OutputSizeLimit`Skeleton"], ",", 
+             RowBox[{"\"ANL35FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL36FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL37FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"ANL38FL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"DRERRFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LILFCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LILFNCFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LBTERMFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"LIINFFL\"", "\[Rule]", "\"N\""}], ",", 
+             RowBox[{"\"AESTDTC\"", "\[Rule]", "\"2212-08-19\""}], ",", 
+             RowBox[{"\"AEENDTC\"", "\[Rule]", "\"2212-08-19\""}]}], 
+           "\[RightAssociation]"}], ",", 
+         TemplateBox[{"7353"}, "OutputSizeLimit`Skeleton"], ",", 
+         RowBox[{"\[LeftAssociation]", 
+           TemplateBox[{"1"}, "OutputSizeLimit`Skeleton"], 
+           "\[RightAssociation]"}]}], "}"}], Short[#, 8]& ], "line" -> 36, 
+   "sessionID" -> 19698762443031913423, "byteCount" -> 159343160, "size" -> 8,
+    "stored" -> False, "expr" -> Missing["NotStored"], "wrap" -> 
+   OutputSizeLimit`Defer, "version" -> 1|>,
+  "OutputSizeLimitTemplate"]], "Output",
+ CellChangeTimes->{4.003594885749905*^9},
+ CellLabel->"Out[36]=",ExpressionUUID->"9209ee7f-41c5-4ac7-bca7-355080b14475"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"Length", "[", "adverse", "]"}], ",", 
+   RowBox[{"Keys", "[", 
+    RowBox[{"First", "[", "adverse", "]"}], "]"}]}], "}"}]], "Input",
+ CellLabel->"In[34]:=",ExpressionUUID->"31b50f88-7cc4-44ca-a099-2a797f71d93a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"7355", ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"STUDYID\"\>", ",", "\<\"USUBJID\"\>", ",", "\<\"SUBJID\"\>", 
+     ",", "\<\"INVID\"\>", ",", "\<\"TRTP\"\>", ",", "\<\"TRTPN\"\>", 
+     ",", "\<\"TRTA\"\>", ",", "\<\"TRTAN\"\>", ",", "\<\"SAFFL\"\>", 
+     ",", "\<\"ICDT\"\>", ",", "\<\"TRTSDT\"\>", ",", "\<\"TRTEDT\"\>", 
+     ",", "\<\"DSTRDT\"\>", ",", "\<\"DEATHDT\"\>", ",", "\<\"COUNTRY\"\>", 
+     ",", "\<\"RACEGR1\"\>", ",", "\<\"RACEGR1N\"\>", ",", "\<\"AGEGR1\"\>", 
+     ",", "\<\"AGEGR1N\"\>", ",", "\<\"AENUM\"\>", ",", "\<\"AESEQ\"\>", 
+     ",", "\<\"AETERM\"\>", ",", "\<\"AELLT\"\>", ",", "\<\"AEDECOD\"\>", 
+     ",", "\<\"AEHLT\"\>", ",", "\<\"AEHLGT\"\>", ",", "\<\"AEBODSYS\"\>", 
+     ",", "\<\"ATOXGR\"\>", ",", "\<\"ATOXGRN\"\>", ",", "\<\"AESER\"\>", 
+     ",", "\<\"AESERL\"\>", ",", "\<\"AESHOSP\"\>", ",", "\<\"AEOUT\"\>", 
+     ",", "\<\"AEOUTL\"\>", ",", "\<\"AESDTH\"\>", ",", "\<\"AESLIFE\"\>", 
+     ",", "\<\"AESMIE\"\>", ",", "\<\"AECONTRT\"\>", ",", "\<\"AESDT\"\>", 
+     ",", "\<\"AESDTF\"\>", ",", "\<\"AESDY\"\>", ",", "\<\"AESTRTPT\"\>", 
+     ",", "\<\"AESTTPT\"\>", ",", "\<\"AEEDT\"\>", ",", "\<\"AEEDTF\"\>", 
+     ",", "\<\"AEEDY\"\>", ",", "\<\"AEENRTPT\"\>", ",", "\<\"AEENTPT\"\>", 
+     ",", "\<\"ADURN\"\>", ",", "\<\"ADURU\"\>", ",", "\<\"AEREL1\"\>", 
+     ",", "\<\"AEREL1N\"\>", ",", "\<\"AEREL2\"\>", ",", "\<\"AEREL2N\"\>", 
+     ",", "\<\"AEACN1\"\>", ",", "\<\"AEACN1N\"\>", ",", "\<\"AEACN2\"\>", 
+     ",", "\<\"AEACN2N\"\>", ",", "\<\"AEACNO\"\>", ",", "\<\"AEACNON\"\>", 
+     ",", "\<\"AEIMDCFL\"\>", ",", "\<\"AEDODCFL\"\>", ",", "\<\"AEDCFL\"\>", 
+     ",", "\<\"AEIMMDFL\"\>", ",", "\<\"AEDOMDFL\"\>", ",", "\<\"AEMDFL\"\>", 
+     ",", "\<\"AEIMRLFL\"\>", ",", "\<\"AEDORLFL\"\>", ",", "\<\"AERELFL\"\>",
+      ",", "\<\"TRTEMFL\"\>", ",", "\<\"ANL01FL\"\>", ",", "\<\"ANL02FL\"\>", 
+     ",", "\<\"ANL03FL\"\>", ",", "\<\"ANL04FL\"\>", ",", "\<\"ANL05FL\"\>", 
+     ",", "\<\"ANL06FL\"\>", ",", "\<\"ANL07FL\"\>", ",", "\<\"ANL08FL\"\>", 
+     ",", "\<\"ANL09FL\"\>", ",", "\<\"ANL10FL\"\>", ",", "\<\"ANL11FL\"\>", 
+     ",", "\<\"ANL12FL\"\>", ",", "\<\"ANL13FL\"\>", ",", "\<\"ANL14FL\"\>", 
+     ",", "\<\"ANL15FL\"\>", ",", "\<\"ANL16FL\"\>", ",", "\<\"ANL17FL\"\>", 
+     ",", "\<\"ANL18FL\"\>", ",", "\<\"ANL19FL\"\>", ",", "\<\"ANL20FL\"\>", 
+     ",", "\<\"ANL21FL\"\>", ",", "\<\"ANL22FL\"\>", ",", "\<\"ANL23FL\"\>", 
+     ",", "\<\"ANL24FL\"\>", ",", "\<\"ANL25FL\"\>", ",", "\<\"ANL26FL\"\>", 
+     ",", "\<\"ANL27FL\"\>", ",", "\<\"ANL28FL\"\>", ",", "\<\"ANL29FL\"\>", 
+     ",", "\<\"ANL30FL\"\>", ",", "\<\"ANL31FL\"\>", ",", "\<\"ANL32FL\"\>", 
+     ",", "\<\"ANL33FL\"\>", ",", "\<\"ANL34FL\"\>", ",", "\<\"ANL35FL\"\>", 
+     ",", "\<\"ANL36FL\"\>", ",", "\<\"ANL37FL\"\>", ",", "\<\"ANL38FL\"\>", 
+     ",", "\<\"DRERRFL\"\>", ",", "\<\"LILFCFL\"\>", ",", "\<\"LILFNCFL\"\>", 
+     ",", "\<\"LBTERMFL\"\>", ",", "\<\"LIINFFL\"\>", ",", "\<\"AESTDTC\"\>", 
+     ",", "\<\"AEENDTC\"\>"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{4.00359486523919*^9, 4.0035948771933527`*^9}},
+ CellLabel->"Out[34]=",ExpressionUUID->"7cac2985-e540-43e3-ad36-96dba98c60e2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Counts", "[", 
+  RowBox[{"subjects", "[", 
+   RowBox[{"[", 
+    RowBox[{"All", ",", "\"\<SAFFL\>\""}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{4.003596290310083*^9, 4.0035962903102903`*^9}},
+ CellLabel->"In[37]:=",ExpressionUUID->"51ddbd6e-afbd-411f-8d94-5a0eb87b0417"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Y\"\>", "\[Rule]", "383"}], ",", 
+   RowBox[{"\<\"N\"\>", "\[Rule]", "2"}]}], "\[RightAssociation]"}]], "Output",\
+
+ CellChangeTimes->{4.003596290752735*^9},
+ CellLabel->"Out[37]=",ExpressionUUID->"95aa755d-1d21-4b08-af24-a95a9e12050e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Counts", "[", 
+  RowBox[{"adverse", "[", 
+   RowBox[{"[", 
+    RowBox[{"All", ",", "\"\<TRTEMFL\>\""}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{4.003596296665299*^9, 4.0035962966653633`*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"55c6cad6-493b-4b7e-8d8e-a7ceb6f68cfd"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"N\"\>", "\[Rule]", "526"}], ",", 
+   RowBox[{"\<\"Y\"\>", "\[Rule]", "6829"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{4.003596297260779*^9},
+ CellLabel->"Out[38]=",ExpressionUUID->"7db548bd-e9e7-4dbe-8e59-ddf345de819e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"c", ",", 
+       RowBox[{"Min", "[", "#", "]"}], ",", 
+       RowBox[{"Max", "[", "#", "]"}], ",", 
+       RowBox[{"Mean", "[", "#", "]"}]}], "}"}], "&"}], "[", 
+    RowBox[{"subjects", "[", 
+     RowBox[{"[", 
+      RowBox[{"All", ",", "c"}], "]"}], "]"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"c", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<AGEIC\>\"", ",", "\"\<HGTBLR\>\"", ",", "\"\<WGTBLR\>\"", 
+       ",", "\"\<BSABLR\>\"", ",", "\"\<LVEFBLR\>\"", 
+       ",", "\"\<ECOGBLR\>\""}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{4.003596310822928*^9, 4.0035963108230352`*^9}},
+ CellLabel->"In[39]:=",ExpressionUUID->"eb4aa58c-a0b6-47d7-808b-695581a2d850"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\<\"AGEIC\"\>", ",", "29.`", ",", "81.`", ",", 
+     "54.18181818181818`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"HGTBLR\"\>", ",", "144.`", ",", "182.`", ",", 
+     "161.05636363636364`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"WGTBLR\"\>", ",", "40.`", ",", "130.8`", ",", 
+     "71.28761038961039`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"BSABLR\"\>", ",", "1.3`", ",", "2.46`", ",", 
+     "1.7558987012987015`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"LVEFBLR\"\>", ",", "50.`", ",", "85.`", ",", 
+     "64.27064935064935`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"ECOGBLR\"\>", ",", "0.`", ",", "2.`", ",", 
+     "0.38181818181818183`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{4.003596311190462*^9},
+ CellLabel->"Out[39]=",ExpressionUUID->"9cbacba0-8432-451d-a35c-ef2d966b02c3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"d", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{
+     RowBox[{"subjectsWithDuration", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "\"\<TRTDURD\>\""}], "]"}], "]"}], ",", 
+     "NumberQ"}], "]"}]}], ";", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Quantile", "[", 
+     RowBox[{"d", ",", 
+      RowBox[{"{", 
+       RowBox[{"0.5", ",", "0.9", ",", "0.99"}], "}"}]}], "]"}], ",", 
+    RowBox[{"Count", "[", 
+     RowBox[{"d", ",", 
+      RowBox[{"_", "?", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"#", ">", "365"}], "&"}], ")"}]}]}], "]"}]}], 
+   "}"}]}]], "Input",
+ CellChangeTimes->{{4.00359631512292*^9, 4.003596315122945*^9}},
+ CellLabel->"In[40]:=",ExpressionUUID->"86a2a97f-5d6d-4142-8ce8-95fae07fc8a6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"176", ",", "510", ",", "1266"}], "}"}], ",", "70"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{4.003596315512607*^9},
+ CellLabel->"Out[40]=",ExpressionUUID->"9621b2b2-6d89-4d08-905f-64e19b432768"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"Length", "[", "adverse", "]"}], ",", 
+   RowBox[{"Length", "[", 
+    RowBox[{"DeleteDuplicates", "[", 
+     RowBox[{"adverse", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<USUBJID\>\"", ",", "\"\<AESEQ\>\""}], "}"}]}], "]"}], 
+      "]"}], "]"}], "]"}]}], "}"}]], "Input",
+ CellChangeTimes->{{4.003596322370057*^9, 4.003596322370101*^9}},
+ CellLabel->"In[41]:=",ExpressionUUID->"0466a636-ad11-4c8b-9315-a76111adb48b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"7355", ",", "7355"}], "}"}]], "Output",
+ CellChangeTimes->{4.0035963228679323`*^9},
+ CellLabel->"Out[41]=",ExpressionUUID->"b61308e6-8fb4-4257-9bf3-706adb34f7f7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Take", "[", 
+  RowBox[{
+   RowBox[{"ReverseSort", "[", 
+    RowBox[{"Counts", "[", 
+     RowBox[{"adverse", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "\"\<AEDECOD\>\""}], "]"}], "]"}], "]"}], "]"}], ",",
+    "20"}], "]"}]], "Input",
+ CellChangeTimes->{{4.003596328967956*^9, 4.003596328967997*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"63d1c48e-5ce1-42d1-912a-69815867b26b"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"ASTHENIA\"\>", "\[Rule]", "381"}], ",", 
+   RowBox[{"\<\"NAUSEA\"\>", "\[Rule]", "361"}], ",", 
+   RowBox[{"\<\"DIARRHOEA\"\>", "\[Rule]", "345"}], ",", 
+   RowBox[{"\<\"ALOPECIA\"\>", "\[Rule]", "289"}], ",", 
+   RowBox[{"\<\"FATIGUE\"\>", "\[Rule]", "255"}], ",", 
+   RowBox[{"\<\"STOMATITIS\"\>", "\[Rule]", "218"}], ",", 
+   RowBox[{"\<\"MYALGIA\"\>", "\[Rule]", "209"}], ",", 
+   RowBox[{"\<\"ARTHRALGIA\"\>", "\[Rule]", "159"}], ",", 
+   RowBox[{"\<\"DYSGEUSIA\"\>", "\[Rule]", "158"}], ",", 
+   RowBox[{"\<\"OEDEMA PERIPHERAL\"\>", "\[Rule]", "151"}], ",", 
+   RowBox[{"\<\"EPISTAXIS\"\>", "\[Rule]", "150"}], ",", 
+   RowBox[{"\<\"CONSTIPATION\"\>", "\[Rule]", "135"}], ",", 
+   RowBox[{"\<\"VOMITING\"\>", "\[Rule]", "135"}], ",", 
+   RowBox[{"\<\"DYSPNOEA\"\>", "\[Rule]", "119"}], ",", 
+   RowBox[{"\<\"NAIL DISORDER\"\>", "\[Rule]", "116"}], ",", 
+   RowBox[{"\<\"WEIGHT INCREASED\"\>", "\[Rule]", "108"}], ",", 
+   RowBox[{"\<\"DECREASED APPETITE\"\>", "\[Rule]", "108"}], ",", 
+   RowBox[{"\<\"HEADACHE\"\>", "\[Rule]", "108"}], ",", 
+   RowBox[{"\<\"COUGH\"\>", "\[Rule]", "107"}], ",", 
+   RowBox[{"\<\"BACK PAIN\"\>", "\[Rule]", "105"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{4.003596329371068*^9},
+ CellLabel->"Out[42]=",ExpressionUUID->"91c07c72-d6e8-44a4-8813-312055d33eb6"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Training the model!!!", "Subsubsection",
+ CellChangeTimes->{{4.003596547418351*^9, 
+  4.003596551416872*^9}},ExpressionUUID->"ee44c1d5-c7c4-4056-92b5-\
+746c8cf88247"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"safeSubjects", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{"subjectsWithDuration", ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "[", "\"\<SAFFL\>\"", "]"}], "===", "\"\<Y\>\""}], "&&", 
+       
+       RowBox[{
+        RowBox[{"#", "[", "\"\<TRT01A\>\"", "]"}], 
+        "===", "\"\<Placebo + Docetaxel\>\""}]}], "&"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"safeEvents", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{"adverse", ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", "[", "\"\<TRTEMFL\>\"", "]"}], "===", "\"\<Y\>\""}], 
+      "&"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"Length", "[", "safeSubjects", "]"}], ",", 
+   RowBox[{"Length", "[", "safeEvents", "]"}]}], "}"}]}], "Input",
+ CellChangeTimes->{{4.00359650211159*^9, 4.0035965021116323`*^9}},
+ CellLabel->"In[43]:=",ExpressionUUID->"b31f6ea3-ad6e-4ed6-bbbd-4ba5a254f623"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"382", ",", "6829"}], "}"}]], "Output",
+ CellChangeTimes->{4.003596503067073*^9},
+ CellLabel->"Out[45]=",ExpressionUUID->"364c3998-3cb1-4849-af87-357df0bf83f2"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"config", "=", 
+   RowBox[{"<|", 
+    RowBox[{
+     RowBox[{"\"\<SubjectID\>\"", "->", "\"\<USUBJID\>\""}], ",", 
+     RowBox[{"\"\<Drug\>\"", "->", "\"\<TRT01A\>\""}], ",", 
+     RowBox[{"\"\<NumericFeatures\>\"", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<AGEIC\>\"", ",", "\"\<HGTBLR\>\"", ",", "\"\<WGTBLR\>\"", 
+        ",", "\"\<BSABLR\>\"", ",", "\"\<LVEFBLR\>\"", 
+        ",", "\"\<ECOGBLR\>\""}], "}"}]}], ",", 
+     RowBox[{"\"\<CategoricalFeatures\>\"", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<SEX\>\"", ",", "\"\<RACE\>\"", ",", "\"\<ETHNIC\>\"", 
+        ",", "\"\<MENOST\>\"", ",", "\"\<GEOREG\>\""}], "}"}]}], ",", 
+     RowBox[{"\"\<ExposureDays\>\"", "->", "\"\<TRTDURD\>\""}], ",", 
+     RowBox[{"\"\<AETerm\>\"", "->", "\"\<AEDECOD\>\""}]}], "|>"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{4.003596508663534*^9, 
+  4.003596528662269*^9}},ExpressionUUID->"9dce3245-1c54-4ad3-898e-\
+3edb7a42c21a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"profiles", "=", 
+   RowBox[{"SEPIABuildProfiles", "[", 
+    RowBox[{"safeSubjects", ",", "safeEvents", ",", 
+     RowBox[{"{", "}"}], ",", "config"}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[55]:=",ExpressionUUID->"0650dfb3-2c37-4078-bac9-04fb44894f3d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "profiles", "]"}]], "Input",
+ CellChangeTimes->{{4.003596522886503*^9, 4.0035965260196533`*^9}},
+ CellLabel->"In[56]:=",ExpressionUUID->"51083fcc-2501-40d8-8590-52f82cafb4de"],
+
+Cell[BoxData["382"], "Output",
+ CellChangeTimes->{{4.0035965277860126`*^9, 4.003596533803863*^9}},
+ CellLabel->"Out[56]=",ExpressionUUID->"a02760c6-c900-42bf-996f-d79a22fe337b"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"split", "=", 
+   RowBox[{"SEPIASplitSubjects", "[", 
+    RowBox[{"profiles", ",", 
+     RowBox[{"{", 
+      RowBox[{"0.7", ",", "0.15", ",", "0.15"}], "}"}], ",", "1234"}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{4.0035965624840183`*^9, 4.0035965754191217`*^9}},
+ CellLabel->"In[62]:=",ExpressionUUID->"1ec64601-9ce7-4e51-8af5-95bcf3d54dc9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"Length", ",", "split"}], "]"}]], "Input",
+ CellLabel->"In[61]:=",ExpressionUUID->"118a71af-699e-4e59-bdeb-a07872db7708"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Train\"\>", "\[Rule]", "267"}], ",", 
+   RowBox[{"\<\"Validation\"\>", "\[Rule]", "57"}], ",", 
+   RowBox[{"\<\"Test\"\>", "\[Rule]", "58"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{4.003596586019394*^9},
+ CellLabel->"Out[61]=",ExpressionUUID->"27787377-f2f4-40d5-b6f8-0425ac4b5763"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ensemble", "=", 
+   RowBox[{"SEPIAFitEnsemble", "[", 
+    RowBox[{"profiles", ",", "split", ",", "config"}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{4.003596578432535*^9, 4.003596584094407*^9}},
+ CellLabel->"In[60]:=",ExpressionUUID->"50c324a1-5d9c-4f14-8628-bf84a0080161"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"ensemble", "[", "\"\<Vocabulary\>\"", "]"}], ",", 
+   RowBox[{"ensemble", "[", "\"\<Weights\>\"", "]"}], ",", 
+   RowBox[{"ensemble", "[", "\"\<RNNStatus\>\"", "]"}], ",", 
+   RowBox[{
+    RowBox[{"ensemble", "[", "\"\<Encoder\>\"", "]"}], 
+    "[", "\"\<CategoricalLevels\>\"", "]"}]}], "}"}]], "Input",
+ CellChangeTimes->{{4.003596592795125*^9, 4.0035965927951527`*^9}},
+ CellLabel->"In[63]:=",ExpressionUUID->"769db231-ba53-48f0-938e-b3a91a526550"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\<\"ALOPECIA\"\>", ",", "\<\"NAUSEA\"\>", 
+     ",", "\<\"DIARRHOEA\"\>", ",", "\<\"FATIGUE\"\>", 
+     ",", "\<\"ASTHENIA\"\>", ",", "\<\"STOMATITIS\"\>", 
+     ",", "\<\"OEDEMA PERIPHERAL\"\>", ",", "\<\"NAIL DISORDER\"\>", 
+     ",", "\<\"WEIGHT INCREASED\"\>", ",", "\<\"MYALGIA\"\>", 
+     ",", "\<\"DYSGEUSIA\"\>", ",", "\<\"VOMITING\"\>", 
+     ",", "\<\"CONSTIPATION\"\>", ",", "\<\"HEADACHE\"\>", 
+     ",", "\<\"PERIPHERAL SENSORY NEUROPATHY\"\>"}], "}"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Poisson\"\>", "\[Rule]", "0.4`"}], ",", 
+     RowBox[{"\<\"ANN\"\>", "\[Rule]", "0.6000000000000001`"}]}], 
+    "\[RightAssociation]"}], ",", "\<\"NotTrained\"\>", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"F\"\>", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"AMERICAN INDIAN OR ALASKA NATIVE\"\>", 
+       ",", "\<\"ASIAN\"\>", ",", "\<\"BLACK OR AFRICAN AMERICAN\"\>", 
+       ",", "\<\"OTHER\"\>", ",", "\<\"WHITE\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"HISPANIC OR LATINO\"\>", 
+       ",", "\<\"NOT HISPANIC OR LATINO\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"Post-Menopausal\"\>", ",", "\<\"Pre-Menopausal\"\>"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"Americas\"\>", ",", "\<\"Asia/Middle-East/Africa\"\>", 
+       ",", "\<\"Europe/Australia/New-Zealand\"\>"}], "}"}]}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{4.003596593192631*^9},
+ CellLabel->"Out[63]=",ExpressionUUID->"a7745f5d-5de5-4edb-b54c-a5bb138deb42"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SEPIAEvaluate", "[", 
+  RowBox[{"ensemble", ",", 
+   RowBox[{"SEPIASubset", "[", 
+    RowBox[{"profiles", ",", 
+     RowBox[{"split", "[", "\"\<Test\>\"", "]"}]}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{4.003596599010585*^9, 4.003596599010641*^9}},
+ CellLabel->"In[64]:=",ExpressionUUID->"7e0bfc73-fc48-4966-a1ca-34404ac67b00"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Poisson\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"LogLoss\"\>", "\[Rule]", "0.6129414945482498`"}], ",", 
+      RowBox[{"\<\"MacroAUC\"\>", "\[Rule]", "0.6490644817089055`"}], ",", 
+      RowBox[{"\<\"RecallAtK\"\>", "\[Rule]", "0.33507495590828923`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"ANN\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"LogLoss\"\>", "\[Rule]", "0.5438591947704021`"}], ",", 
+      RowBox[{"\<\"MacroAUC\"\>", "\[Rule]", "0.6070153868165362`"}], ",", 
+      RowBox[{"\<\"RecallAtK\"\>", "\[Rule]", "0.4347883597883598`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Ensemble\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"LogLoss\"\>", "\[Rule]", "0.5232225241148409`"}], ",", 
+      RowBox[{"\<\"MacroAUC\"\>", "\[Rule]", "0.6541656217845204`"}], ",", 
+      RowBox[{"\<\"RecallAtK\"\>", "\[Rule]", "0.4571869488536155`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"PrevalenceBaseline\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"LogLoss\"\>", "\[Rule]", "0.548246926122101`"}], ",", 
+      RowBox[{"\<\"MacroAUC\"\>", "\[Rule]", "0.5`"}], ",", 
+      RowBox[{"\<\"RecallAtK\"\>", "\[Rule]", "0.37817460317460316`"}]}], 
+     "\[RightAssociation]"}]}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{4.003596599675941*^9},
+ CellLabel->"Out[64]=",ExpressionUUID->"cb20e137-71dc-46d4-9fa1-0282fd4ed6e8"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 859},
+WindowMargins->{{99, Automatic}, {Automatic, 21}},
+FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"c6da5c99-8662-4ad7-b0ac-d0c0ca388ff0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 175, 3, 53, "Subsection",ExpressionUUID->"938d14a3-f614-4e7a-a9c5-afcccfc885d9"],
+Cell[754, 27, 235, 6, 36, "CodeText",ExpressionUUID->"44492738-41dd-416f-98f3-914d68c21d01"],
+Cell[CellGroupData[{
+Cell[1014, 37, 577, 12, 70, "Input",ExpressionUUID->"7ba4948c-4a06-4767-9707-c3850541318d"],
+Cell[CellGroupData[{
+Cell[1616, 53, 205, 4, 23, "Print",ExpressionUUID->"9c28b219-8e55-4534-a54f-e6a40f80ea96"],
+Cell[1824, 59, 232, 5, 23, "Print",ExpressionUUID->"985c3b27-2bac-4c0f-9e53-0a35f1b82452"]
+}, Open  ]],
+Cell[2071, 67, 675, 13, 74, "Output",ExpressionUUID->"373347aa-13b0-438c-b912-5bdde60372ad"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[2795, 86, 209, 4, 37, "Subsection",ExpressionUUID->"f35a4ff4-2443-4474-af36-05a519d595db"],
+Cell[CellGroupData[{
+Cell[3029, 94, 207, 3, 43, "Subsubsection",ExpressionUUID->"e30912f2-823e-481a-afcd-2e220b51a9e6"],
+Cell[CellGroupData[{
+Cell[3261, 101, 233, 4, 29, "Input",ExpressionUUID->"ab16c3b0-fd39-4c78-9a16-3198814ac54b"],
+Cell[3497, 107, 3450, 52, 203, "Output",ExpressionUUID->"13e6fc2e-bde8-4151-a8df-af2744b6df55"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6984, 164, 316, 6, 29, "Input",ExpressionUUID->"71b5330a-b4ab-492d-b6d1-67bb909aef8b"],
+Cell[7303, 172, 3039, 45, 237, "Output",ExpressionUUID->"36043853-87de-4911-872e-1e699ca31ec0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10379, 222, 249, 4, 29, "Input",ExpressionUUID->"454c1b3b-f02c-4ee3-9ce7-582b2174d5f5"],
+Cell[10631, 228, 4962, 84, 219, "Output",ExpressionUUID->"9fb14e1a-9642-40f7-a0cc-4df67eabe644"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[15642, 318, 240, 6, 35, "Subsubsection",ExpressionUUID->"7e43fa24-c5af-4c49-a8e8-a817ed2178bc"],
+Cell[CellGroupData[{
+Cell[15907, 328, 284, 5, 29, "Input",ExpressionUUID->"3ac9e0af-35cc-4d36-b409-04b2d6f5dd5a"],
+Cell[16194, 335, 19887, 339, 715, "Output",ExpressionUUID->"59c5eb3d-79ad-4910-9d84-64fcecbbb91b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36118, 679, 558, 14, 49, "Input",ExpressionUUID->"4949b092-21b1-4d80-981f-7ca2b8c132cd"],
+Cell[36679, 695, 198, 4, 33, "Output",ExpressionUUID->"9a32e30a-eb86-470d-b317-1629adc6dc84"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36914, 704, 303, 6, 29, "Input",ExpressionUUID->"f423ebd9-868f-4ac8-b779-ef1f3b85740b"],
+Cell[37220, 712, 397, 8, 33, "Output",ExpressionUUID->"6abc50ca-e389-44fb-a28f-4a2f507cd3ac"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37654, 725, 757, 18, 70, "Input",ExpressionUUID->"15ad3930-59ca-43fe-879c-07e2c756bdfb"],
+Cell[38414, 745, 1880, 47, 94, "Output",ExpressionUUID->"cfc68992-b704-4a14-81b9-275b68804ff7"]
+}, Open  ]],
+Cell[40309, 795, 806, 18, 70, "Input",ExpressionUUID->"2f5866f2-7136-400d-b74a-b075be1fcaf9"],
+Cell[41118, 815, 905, 24, 70, "Input",ExpressionUUID->"cafa3c17-5773-4f7d-a46a-5b5c977b0c53"],
+Cell[42026, 841, 659, 16, 70, "Input",ExpressionUUID->"0ae431a6-dfb4-4709-ba80-22574201704b"],
+Cell[CellGroupData[{
+Cell[42710, 861, 639, 17, 49, "Input",ExpressionUUID->"dc437bb1-1ffc-474e-9da2-f89fe4caadbe"],
+Cell[43352, 880, 209, 4, 33, "Output",ExpressionUUID->"e578e79b-1440-4e09-9680-7b96b60565e0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43598, 889, 281, 5, 29, "Input",ExpressionUUID->"9ff9e0a8-456b-4add-8a38-19c74bde8938"],
+Cell[43882, 896, 2888, 52, 141, "Output",ExpressionUUID->"9209ee7f-41c5-4ac7-bca7-355080b14475"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46807, 953, 263, 6, 29, "Input",ExpressionUUID->"31b50f88-7cc4-44ca-a099-2a797f71d93a"],
+Cell[47073, 961, 3190, 44, 258, "Output",ExpressionUUID->"7cac2985-e540-43e3-ad36-96dba98c60e2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[50300, 1010, 304, 6, 29, "Input",ExpressionUUID->"51ddbd6e-afbd-411f-8d94-5a0eb87b0417"],
+Cell[50607, 1018, 309, 7, 33, "Output",ExpressionUUID->"95aa755d-1d21-4b08-af24-a95a9e12050e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[50953, 1030, 305, 6, 29, "Input",ExpressionUUID->"55c6cad6-493b-4b7e-8d8e-a7ceb6f68cfd"],
+Cell[51261, 1038, 313, 7, 33, "Output",ExpressionUUID->"7db548bd-e9e7-4dbe-8e59-ddf345de819e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51611, 1050, 785, 20, 49, "Input",ExpressionUUID->"eb4aa58c-a0b6-47d7-808b-695581a2d850"],
+Cell[52399, 1072, 908, 22, 53, "Output",ExpressionUUID->"9cbacba0-8432-451d-a35c-ef2d966b02c3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53344, 1099, 765, 23, 49, "Input",ExpressionUUID->"86a2a97f-5d6d-4142-8ce8-95fae07fc8a6"],
+Cell[54112, 1124, 264, 7, 33, "Output",ExpressionUUID->"9621b2b2-6d89-4d08-905f-64e19b432768"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[54413, 1136, 522, 13, 29, "Input",ExpressionUUID->"0466a636-ad11-4c8b-9315-a76111adb48b"],
+Cell[54938, 1151, 202, 4, 33, "Output",ExpressionUUID->"b61308e6-8fb4-4257-9bf3-706adb34f7f7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55177, 1160, 412, 10, 29, "Input",ExpressionUUID->"63d1c48e-5ce1-42d1-912a-69815867b26b"],
+Cell[55592, 1172, 1389, 25, 115, "Output",ExpressionUUID->"91c07c72-d6e8-44a4-8813-312055d33eb6"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[57030, 1203, 172, 3, 43, "Subsubsection",ExpressionUUID->"ee44c1d5-c7c4-4056-92b5-746c8cf88247"],
+Cell[CellGroupData[{
+Cell[57227, 1210, 938, 26, 90, "Input",ExpressionUUID->"b31f6ea3-ad6e-4ed6-bbbd-4ba5a254f623"],
+Cell[58168, 1238, 199, 4, 33, "Output",ExpressionUUID->"364c3998-3cb1-4849-af87-357df0bf83f2"]
+}, Open  ]],
+Cell[58382, 1245, 962, 21, 90, "Input",ExpressionUUID->"9dce3245-1c54-4ad3-898e-3edb7a42c21a"],
+Cell[59347, 1268, 290, 6, 29, "Input",ExpressionUUID->"0650dfb3-2c37-4078-bac9-04fb44894f3d"],
+Cell[CellGroupData[{
+Cell[59662, 1278, 213, 3, 29, "Input",ExpressionUUID->"51083fcc-2501-40d8-8590-52f82cafb4de"],
+Cell[59878, 1283, 177, 2, 33, "Output",ExpressionUUID->"a02760c6-c900-42bf-996f-d79a22fe337b"]
+}, Open  ]],
+Cell[60070, 1288, 387, 9, 29, "Input",ExpressionUUID->"1ec64601-9ce7-4e51-8af5-95bcf3d54dc9"],
+Cell[CellGroupData[{
+Cell[60482, 1301, 167, 3, 29, "Input",ExpressionUUID->"118a71af-699e-4e59-bdeb-a07872db7708"],
+Cell[60652, 1306, 376, 8, 33, "Output",ExpressionUUID->"27787377-f2f4-40d5-b6f8-0425ac4b5763"]
+}, Open  ]],
+Cell[61043, 1317, 317, 7, 29, "Input",ExpressionUUID->"50c324a1-5d9c-4f14-8628-bf84a0080161"],
+Cell[CellGroupData[{
+Cell[61385, 1328, 503, 10, 49, "Input",ExpressionUUID->"769db231-ba53-48f0-938e-b3a91a526550"],
+Cell[61891, 1340, 1613, 35, 135, "Output",ExpressionUUID->"a7745f5d-5de5-4edb-b54c-a5bb138deb42"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[63541, 1380, 358, 7, 29, "Input",ExpressionUUID->"7e0bfc73-fc48-4966-a1ca-34404ac67b00"],
+Cell[63902, 1389, 1619, 32, 94, "Output",ExpressionUUID->"cb20e137-71dc-46d4-9fa1-0282fd4ed6e8"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
