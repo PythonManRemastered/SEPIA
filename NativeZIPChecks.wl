@@ -1,0 +1,115 @@
+Module[{directory=DirectoryName[$InputFileName]},
+  Get[FileNameJoin[{directory,"SEPIANative.wl"}]];
+  Get[FileNameJoin[{directory,"NativeZIPFixtures.wl"}]]
+];
+Begin["SEPIANative`Private`"];
+Global`SEPIANativeZIPTestReport=Module[{setup,uid="Synthetic_Study",uuid="11111111-2222-3333-4444-555555555555",
+    listing,metadata,catalogue,archiveBytes,calls,variant,result,opened,uploaded,old,tests,directories={},fixturePaths=<||>,directory,write,
+    changedSize=False,permitted=True,websiteCalls={},requests={},authResult=True,extractResult,idx,public},
+  directory=CreateDirectory[];
+  write[key_] := Module[{p=FileNameJoin[{directory,key<>".zip"}]},SEPIAZIPProbe`Private`writeBytes[p,$zipSyntheticArchives[key]];p];
+  Scan[(fixturePaths[#]=write[#])&,Keys[$zipSyntheticArchives]];
+  setup[key_:"ordinary"] := (
+    Scan[zipDeleteDirectory,Keys[$zipPendingDirectories]];
+    $zipArchives=<||>;$zipPendingDirectories=<||>;$zipWebsite=None;$zipCleanupBlocked=False;
+    $tables=<||>;$listings=<||>;$connection=<|"Session"->uuid,"Authorization"->"synthetic","Affinity"->""|>;
+    variant=key;archiveBytes=$zipSyntheticArchives[key];calls={};requests={};websiteCalls={};changedSize=False;permitted=True;authResult=True;
+    catalogue={<|"uniqueDatasetId"->uid,"uuid"->uuid|>};
+    listing=<|"ListingToken"->"listing","ContributionID"->uid,"Caslib"->uid,"Directory"->"","ParentDirectory"->"",
+      "Severity"->0,"Entries"->{<|"Index"->1,"Name"->"synthetic.zip","RelativePath"->"synthetic.zip","Kind"->"File",
+        "Bytes"->Length[archiveBytes],"SupportedImport"->False|>}|>;
+    $listings["listing"]=listing;uiNewSession[];PDSNativeClearImportedData[];$uiListing=listing;$uiUID=uid;$uiSelected=1;
+  );
+  tests=Block[{$zipArchives=<||>,$zipPendingDirectories=<||>,$zipWebsite=None,$zipCleanupBlocked=False,
+    $connection,$tables,$listings,$uiArchive,$uiListing,$uiSelected,$uiTable,$uiMetadata,$uiBusy,$uiBlocked,$uiImported,
+    $uiImportSummary,$uiTimings,$uiStatus,$uiTone,$uiUID,$uiNotebook=None,zipRequest,zipEnsureWebsite,zipConfirmTransfer,request,uiCall},
+    zipEnsureWebsite[] := authResult;
+    zipConfirmTransfer[___] := True;
+    zipRequest[method_,route_,body_:""] := (AppendTo[calls,{method,route}];
+      <|"StatusCode"->200,"Cookies"->{},"BodyByteArray"->Switch[route,
+        "/api/accessdata/results",ExportByteArray[catalogue,"RawJSON"],
+        "/api/accessdata/results/"<>uuid,ExportByteArray[<|"uniqueDatasetId"->uid,"uuid"->uuid,"donationId"->987,
+          "fileGroups"->{<|"files"->{<|"filename"->"synthetic.zip","id"->654,"donationId"->987,
+            "downloadable"->permitted,"fileSize"->(Length[archiveBytes]+If[changedSize,1,0])|>}|>}|>,"RawJSON"],
+        "/api/file/download/987/654",archiveBytes,
+        "/api/logoff",ExportByteArray[<||>,"RawJSON"],_,ExportByteArray[<||>,"RawJSON"]]|>);
+    request[method_,route_,body_,auth_,affinity_,timeout_,headers_] := (AppendTo[requests,{method,route,body,headers}];
+      <|"Payload"-><|"disposition"-><|"severity"->"Normal"|>|>,"Affinity"->""|>);
+    uiCall[operation_,arguments_] := (AppendTo[websiteCalls,operation];Switch[operation,
+      "zipOpen",PDSNativeOpenZIP[<|"ListingToken"->arguments[[1]]|>,arguments[[2]]],
+      "zipLoad",PDSNativeLoadZIPMember@@arguments,
+      "zipClose",PDSNativeCloseZIP@@arguments,
+      "inspect",<|"Dimensions"->{1,1},"ColumnNames"->{"synthetic"},"LoadSeverity"->0,"LoadStatus"->"Success","Severity"->0,"ElapsedSeconds"->.1|>,
+      "drop",KeyDropFrom[$tables,arguments[[1]]];<|"Status"->"Dropped","Severity"->0|>,
+      "browse",listing,_,failure["UnexpectedMock","Unexpected test operation."]]);
+    WithCleanup[Null,{
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];{opened["ListingKind"],Length[opened["Entries"]],Length[$zipArchives]},
+        {"ZIP",2,1},TestID->"dynamic-study-archive-open"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[Append[listing,"ContributionID"->"tampered"],1];opened["ContributionID"],uid,TestID->"authoritative-cas-listing-used"],
+      VerificationTest[setup[];PDSNativeOpenZIP[<|"ListingToken"->"stale"|>,1][[1]],"UnknownListing",TestID->"stale-file-selection"],
+      VerificationTest[setup[];PDSNativeOpenZIP[listing,9][[1]],"InvalidSelection",TestID->"invalid-zip-index"],
+      VerificationTest[setup[];catalogue={};{PDSNativeOpenZIP[listing,1][[1]],Count[calls,{_,"/api/file/download/987/654"}]},
+        {"ContributionNotUnique",0},TestID->"no-study-guessing"],
+      VerificationTest[setup[];catalogue=Join[catalogue,catalogue];PDSNativeOpenZIP[listing,1][[1]],"ContributionNotUnique",TestID->"ambiguous-study-rejected"],
+      VerificationTest[setup[];permitted=False;{PDSNativeOpenZIP[listing,1][[1]],Count[calls,{_,"/api/file/download/987/654"}]},
+        {"DownloadNotAuthorized",0},TestID->"download-permission-enforced"],
+      VerificationTest[setup[];changedSize=True;{PDSNativeOpenZIP[listing,1][[1]],Count[calls,{_,"/api/file/download/987/654"}]},
+        {"ArchiveMetadataMismatch",0},TestID->"website-and-cas-size-must-agree"],
+      VerificationTest[setup[];authResult=<|"Status"->"Canceled"|>;{PDSNativeOpenZIP[listing,1]["Status"],calls,Length[$zipArchives]},
+        {"Canceled",{},0},TestID->"login-cancel-no-download"],
+      VerificationTest[setup["traversal"];{PDSNativeOpenZIP[listing,1][[1]],Length[$zipPendingDirectories]},
+        {"UnsupportedOrUnsafeZIP",0},TestID->"unsafe-zip-deleted-before-selection"],
+      VerificationTest[setup["duplicate"];PDSNativeOpenZIP[listing,1][[1]],"UnsupportedOrUnsafeZIP",TestID->"case-ambiguous-archive-rejected"],
+      VerificationTest[setup["symlink"];opened=PDSNativeOpenZIP[listing,1];opened["Entries"][[1]]["SupportedImport"],False,TestID->"symlink-cannot-load"],
+      VerificationTest[setup["encrypted"];opened=PDSNativeOpenZIP[listing,1];opened["Entries"][[1]]["SupportedImport"],False,TestID->"encrypted-member-cannot-load"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];opened["Entries"][[2]]["SupportedImport"],False,TestID->"pdf-inside-zip-remains-disabled"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];uploaded=PDSNativeLoadZIPMember[opened["ArchiveToken"],1];
+        {uploaded["Status"],uploaded["ExtractedDirectoryDeleted"],Length[$zipPendingDirectories],Length[requests]},
+        {"Loaded",True,1,1},TestID->"selected-member-upload-and-extraction-cleanup"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];uploaded=PDSNativeLoadZIPMember[opened["ArchiveToken"],1];
+        requests[[1,3]]===$zipSyntheticBytes,True,TestID->"original-selected-bytes-uploaded"],
+      VerificationTest[setup["nested"];opened=PDSNativeOpenZIP[listing,1];uploaded=PDSNativeLoadZIPMember[opened["ArchiveToken"],1];
+        {uploaded["ArchiveMember"],requests[[1,3]]===$zipSyntheticBytes},{"data/adsl.sas7bdat",True},TestID->"nested-member-exact-extraction"],
+      VerificationTest[setup["unicode"];opened=PDSNativeOpenZIP[listing,1];uploaded=PDSNativeLoadZIPMember[opened["ArchiveToken"],1];
+        {uploaded["ArchiveMember"],requests[[1,3]]===$zipSyntheticBytes},{"dátá/adsl.sas7bdat",True},TestID->"utf8-member-path"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];PDSNativeLoadZIPMember[opened["ArchiveToken"],2][[1]],
+        "UnsupportedZIPMember",TestID->"pdf-no-upload"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];uploaded=PDSNativeLoadZIPMember[opened["ArchiveToken"],1];
+        {uploaded["ContributionID"],uploaded["IdentityStatus"],StringLength[uploaded["MemberSHA256"]],StringLength[uploaded["ArchiveSHA256"]]},
+        {uid,"VerifiedAgainstPDSWebsite",64,64},TestID->"dynamic-source-provenance-and-hashes"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];public=opened;FreeQ[public,"Cookies"|"Path"|"UUID"],True,TestID->"listing-no-private-session-or-local-path"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];PDSNativeCloseZIP[opened["ArchiveToken"]];
+        {Length[$zipArchives],Length[$zipPendingDirectories]},{0,0},TestID->"close-releases-archive"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];PDSNativeCloseZIP[opened["ArchiveToken"]];
+        PDSNativeLoadZIPMember[opened["ArchiveToken"],1][[1]],"UnknownArchive",TestID->"stale-member-token"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];$zipWebsite=<|"Cookies"->{},"UUID"->"synthetic"|>;
+        zipCleanupResources[];{Length[$zipArchives],Length[$zipPendingDirectories],$zipWebsite},{0,0,None},TestID->"disconnect-resource-cleanup"],
+      VerificationTest[setup[];uiOpenZIP[];{uiInZIP[],uiZIPSelected[],Length[$zipArchives]},{True,False,1},TestID->"ui-open-archive"],
+      VerificationTest[setup[];uiOpenZIP[];$uiSelected=1;uiLoad[];{$uiTable["SourceKind"],$uiMetadata["Dimensions"],websiteCalls},
+        {"ZIPMemberUpload",{1,1},{"zipOpen","zipLoad","inspect"}},TestID->"ui-load-selected-member-and-inspect"],
+      VerificationTest[setup[];uiOpenZIP[];uiNavigate["Up"];{uiInZIP[],$uiArchive,Length[$zipArchives],$uiListing["ListingToken"]},
+        {False,None,0,"listing"},TestID->"up-closes-archive-and-restores-parent"],
+      VerificationTest[setup[];uiOpenZIP[];$uiSelected=1;uiLoad[];uiNavigate["Up"];
+        {Length[$tables],Length[$zipArchives],websiteCalls},{0,0,{"zipOpen","zipLoad","inspect","drop","zipClose"}},TestID->"up-drops-table-before-archive-close"],
+      VerificationTest[setup[];uiOpenZIP[];uiSetLibrary["OtherStudy"];uiBrowseRoot[];Length[$zipArchives],0,TestID->"library-change-releases-archive"],
+      VerificationTest[setup[];authResult=<|"Status"->"Canceled"|>;uiOpenZIP[];{uiInZIP[],$uiTone,Length[$zipArchives]},
+        {False,"Success",0},TestID->"ui-login-cancel-keeps-cas-listing"],
+      VerificationTest[setup[];uiOpenZIP[];Head[uiContents[]],Column,TestID->"archive-ui-expression-builds"],
+      VerificationTest[setup["empty"];opened=PDSNativeOpenZIP[listing,1];opened["Entries"],{},TestID->"empty-zip-lists-safely"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];
+        old=OpenAppend[$zipArchives[opened["ArchiveToken"]]["Path"],BinaryFormat->True];BinaryWrite[old,{0},"Byte"];Close[old];
+        {PDSNativeLoadZIPMember[opened["ArchiveToken"],1][[1]],Length[requests]},
+        {"ArchiveChanged",0},TestID->"changed-cache-no-upload-or-stale-provenance"],
+      VerificationTest[setup[];opened=PDSNativeOpenZIP[listing,1];
+        Block[{uploadSAS},uploadSAS[___]:=Abort[];CheckAbort[PDSNativeLoadZIPMember[opened["ArchiveToken"],1],Null]];
+        {Length[$zipPendingDirectories],$busy},{1,False},TestID->"aborted-member-load-cleans-extraction-and-unlocks-backend"],
+      VerificationTest[zipSafeName /@ {"a//b","a/./b","../x","a/b","a/"},{False,False,False,True,True},TestID->"canonical-archive-paths"]
+    },
+      Scan[zipDeleteDirectory,Keys[$zipPendingDirectories]];$zipArchives=<||>;$zipPendingDirectories=<||>;$zipWebsite=None;
+      zipDeleteDirectory[directory]
+    ]
+  ];
+  TestReport[tests]
+];
+End[];
+Global`SEPIANativeZIPTestReport
